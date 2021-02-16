@@ -47,7 +47,7 @@ RUN update-alternatives --install /usr/local/bin/pip pip /usr/local/bin/pip3 1
 # This is only useful for cuda env 
 RUN export USE_CUDA=1
 
-ARG CUDA_VERSION=""
+ARG CUDA_VERSION="cu110"
 
 RUN TORCH_VER=$(curl --silent --location https://pypi.org/pypi/torch/json | python -c "import sys, json, pkg_resources; releases = json.load(sys.stdin)['releases']; print(sorted(releases, key=pkg_resources.parse_version)[-1])") && \
     TORCH_VISION_VER=$(curl --silent --location https://pypi.org/pypi/torchvision/json | python -c "import sys, json, pkg_resources; releases = json.load(sys.stdin)['releases']; print(sorted(releases, key=pkg_resources.parse_version)[-1])") && \

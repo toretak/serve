@@ -41,13 +41,13 @@ RUN python3 -m venv /home/venv
 
 ENV PATH="/home/venv/bin:$PATH"
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
-RUN update-alternatives --install /usr/local/bin/pip pip /usr/local/bin/pip3 1
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1 \
+    && update-alternatives --install /usr/local/bin/pip pip /usr/local/bin/pip3 1
 
 # This is only useful for cuda env 
 RUN export USE_CUDA=1
 
-ARG CUDA_VERSION="cu110"
+ARG CUDA_VERSION=""
 
 RUN TORCH_VER=$(curl --silent --location https://pypi.org/pypi/torch/json | python -c "import sys, json, pkg_resources; releases = json.load(sys.stdin)['releases']; print(sorted(releases, key=pkg_resources.parse_version)[-1])") && \
     TORCH_VISION_VER=$(curl --silent --location https://pypi.org/pypi/torchvision/json | python -c "import sys, json, pkg_resources; releases = json.load(sys.stdin)['releases']; print(sorted(releases, key=pkg_resources.parse_version)[-1])") && \
